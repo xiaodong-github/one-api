@@ -17,7 +17,7 @@ require (
 	github.com/pkoukk/tiktoken-go v0.1.1
 	golang.org/x/crypto v0.9.0
 	gorm.io/driver/mysql v1.4.3
-	gorm.io/driver/sqlite v1.4.3
+	//gorm.io/driver/sqlite v1.4.3
 	gorm.io/gorm v1.24.0
 )
 
@@ -42,7 +42,7 @@ require (
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/mattn/go-isatty v0.0.19 // indirect
-	github.com/mattn/go-sqlite3 v2.0.3+incompatible // indirect
+	//github.com/mattn/go-sqlite3 v2.0.3+incompatible // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect

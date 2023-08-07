@@ -2,7 +2,7 @@ package model
 
 import (
 	"gorm.io/driver/mysql"
-	"gorm.io/driver/sqlite"
+	//"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"one-api/common"
 	"os"
@@ -48,11 +48,11 @@ func InitDB() (err error) {
 		})
 	} else {
 		// Use SQLite
-		common.SysLog("SQL_DSN not set, using SQLite as database")
-		common.UsingSQLite = true
-		db, err = gorm.Open(sqlite.Open(common.SQLitePath), &gorm.Config{
-			PrepareStmt: true, // precompile SQL
-		})
+		//common.SysLog("SQL_DSN not set, using SQLite as database")
+		//common.UsingSQLite = true
+		//db, err = gorm.Open(sqlite.Open(common.SQLitePath), &gorm.Config{
+		//	PrepareStmt: true, // precompile SQL
+		//})
 	}
 	common.SysLog("database connected")
 	if err == nil {
