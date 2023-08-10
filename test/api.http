@@ -1,0 +1,30 @@
+###获取状态
+GET {{host}}/api/status
+Content-Type: application/x-www-form-urlencoded
+
+###登录
+POST {{host}}/api/user/login
+Content-Type: application/json
+
+{"username": "root","password":"123456"}
+
+###查看账户信息
+GET {{host}}/api/user/self
+Content-Type: application/x-www-form-urlencoded
+
+###修改账户信息
+PUT {{host}}/api/user/self
+Content-Type: application/json
+
+{"display_name": "root"}
+
+###删除用户
+DELETE {{host}}/api/user/self/
+
+###获取登录accesstoken
+GET {{host}}/api/user/token
+Content-Type: application/x-www-form-urlencoded
+
+###获取所有chat访问token
+GET {{host}}/api/token
+Content-Type: application/x-www-form-urlencoded

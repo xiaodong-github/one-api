@@ -1,0 +1,16 @@
+###获取openai的所有模型
+GET {{host}}/v1/models
+Content-Type: application/x-www-form-urlencoded
+Authorization: NbNs5ThVaPMoanMr1a5fA601A0B74eF9B8C41862D4C73b21
+
+###获取openai某一个模型  比如：dall-e
+GET {{host}}/v1/models/dall-e
+Content-Type: application/x-www-form-urlencoded
+Authorization: NbNs5ThVaPMoanMr1a5fA601A0B74eF9B8C41862D4C73b21
+
+###生成图片
+POST {{host}}/v1/images/generations
+Content-Type: application/json
+Authorization: NbNs5ThVaPMoanMr1a5fA601A0B74eF9B8C41862D4C73b21
+
+{"prompt": "Conjure an installation by Patricia Piccinini, a room filled with life-sized hybrid creatures, blurring the line between the familiar and the bizarre. The high-resolution 3D art piece captures the poignant expressions and intricate details of these creatures.  --ar 9:14 --s 250 --style raw","n": 5,"size": "1024x1024"}
