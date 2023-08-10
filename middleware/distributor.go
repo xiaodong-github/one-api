@@ -84,6 +84,11 @@ func Distribute() func(c *gin.Context) {
 					modelRequest.Model = "dall-e"
 				}
 			}
+			if strings.HasPrefix(c.Request.URL.Path, "/v1/images/edits") {
+				if modelRequest.Model == "" {
+					modelRequest.Model = "dall-e"
+				}
+			}
 			channel, err = model.CacheGetRandomSatisfiedChannel(userGroup, modelRequest.Model)
 			if err != nil {
 				message := fmt.Sprintf("当前分组 %s 下对于模型 %s 无可用渠道", userGroup, modelRequest.Model)

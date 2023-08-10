@@ -1,0 +1,20 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="go build one-api" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
+    <module name="one-api" />
+    <working_directory value="$PROJECT_DIR$" />
+    <parameters value="--log-dir $PROJECT_DIR$/logs" />
+    <envs>
+      <env name="GIN_MODE" value="debug" />
+      <env name="PORT" value="3000" />
+      <env name="REDIS_CONN_STRING" value="redis://localhost:6379" />
+      <env name="SQL_DSN" value="root:123456@tcp(localhost:3306)/oneapi" />
+      <env name="SYNC_FREQUENCY" value="60" />
+      <env name="CHANNEL_UPDATE_FREQUENCY" value="1" />
+    </envs>
+    <kind value="PACKAGE" />
+    <package value="one-api" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$/main.go" />
+    <method v="2" />
+  </configuration>
+</component>

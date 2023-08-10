@@ -24,6 +24,7 @@ const (
 	RelayModeModerations
 	RelayModeImagesGenerations
 	RelayModeEdits
+	RelayModeImagesEdits
 )
 
 // https://platform.openai.com/docs/api-reference/chat
@@ -60,6 +61,15 @@ type ImageRequest struct {
 	Prompt string `json:"prompt"`
 	N      int    `json:"n"`
 	Size   string `json:"size"`
+}
+
+type ImageEditsRequest struct {
+	Image          string `json:"image"`
+	Mask           string `json:"mask,omitempty"`
+	Prompt         string `json:"prompt"`
+	N              int    `json:"n"`
+	Size           string `json:"size"`
+	ResponseFormat string `json:"response_format"`
 }
 
 type Usage struct {
@@ -156,6 +166,8 @@ func Relay(c *gin.Context) {
 		relayMode = RelayModeModerations
 	} else if strings.HasPrefix(c.Request.URL.Path, "/v1/images/generations") {
 		relayMode = RelayModeImagesGenerations
+	} else if strings.HasPrefix(c.Request.URL.Path, "/v1/images/edits") {
+		relayMode = RelayModeImagesEdits
 	} else if strings.HasPrefix(c.Request.URL.Path, "/v1/edits") {
 		relayMode = RelayModeEdits
 	}
@@ -163,6 +175,8 @@ func Relay(c *gin.Context) {
 	switch relayMode {
 	case RelayModeImagesGenerations:
 		err = relayImageHelper(c, relayMode)
+	case RelayModeImagesEdits:
+		err = relayImageEditHelper(c, relayMode)
 	default:
 		err = relayTextHelper(c, relayMode)
 	}
