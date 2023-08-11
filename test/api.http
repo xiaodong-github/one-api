@@ -39,7 +39,7 @@ Authorization: 66459398d897400cb7539937f4ecd2ff
 ###聊天接口
 POST {{host}}/v1/chat/completions
 Content-Type: application/json
-Authorization: iTugiHxVQfwD9j8RDbF12dE101F044B9B9F92d270a6b20F1
+Authorization: BYKDpcdgohyU0wXs08Ba3c21E2D346Ad887e1a10E4C29bE5
 
 {"model": "gpt-3.5-turbo","messages": [{"role": "user", "content": "test"}]}
 
