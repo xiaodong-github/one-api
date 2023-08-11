@@ -28,3 +28,18 @@ Content-Type: application/x-www-form-urlencoded
 ###获取所有chat访问token
 GET {{host}}/api/token
 Content-Type: application/x-www-form-urlencoded
+
+###新建token
+POST {{host}}/api/token/
+Content-Type: application/json
+Authorization: 66459398d897400cb7539937f4ecd2ff
+
+{"name": "test1","expired_time": -1,"unlimited_quota": true}
+
+###聊天接口
+POST {{host}}/v1/chat/completions
+Content-Type: application/json
+Authorization: iTugiHxVQfwD9j8RDbF12dE101F044B9B9F92d270a6b20F1
+
+{"model": "gpt-3.5-turbo","messages": [{"role": "user", "content": "test"}]}
+
