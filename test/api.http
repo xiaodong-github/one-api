@@ -34,12 +34,32 @@ POST {{host}}/api/token/
 Content-Type: application/json
 Authorization: 66459398d897400cb7539937f4ecd2ff
 
-{"name": "test1","expired_time": -1,"unlimited_quota": true}
+{"name": "test4","expired_time": -1,"unlimited_quota": true}
 
-###聊天接口
+###openai 聊天接口
+POST {{host}}/v1/chat/completions
+Content-Type: application/json; charset=UTF-8
+Authorization: {{Authorization-openai}}
+
+
+{"stream": true,"model": "gpt-3.5-turbo","messages": [{"role": "user", "content": "Just tell me your name. No other information."}]}
+
+###讯飞 聊天接口
 POST {{host}}/v1/chat/completions
 Content-Type: application/json
-Authorization: BYKDpcdgohyU0wXs08Ba3c21E2D346Ad887e1a10E4C29bE5
+Authorization: {{Authorization-xunfei}}
+Accept-Charset: utf-8
 
-{"model": "gpt-3.5-turbo","messages": [{"role": "user", "content": "test"}]}
+{
+    "stream": true,"model": "SparkDesk","messages": [{"role": "user", "content": "Just tell me your name. No other information."}]
+}
 
+###智普 聊天接口
+POST {{host}}/v1/chat/completions
+Content-Type: application/json
+Authorization: {{Authorization-zhipu}}
+Accept-Charset: utf-8
+
+{
+  "stream": true,"model": "chatglm_std","messages": [{"role": "user", "content": "Just tell me your name. No other information."}]
+}
