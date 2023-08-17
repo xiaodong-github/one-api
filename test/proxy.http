@@ -1,7 +1,7 @@
 ###
 POST https://api.openai-proxy.com/v1/chat/completions
 Content-Type: application/json; charset=UTF-8
-Authorization: Bearer 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
+Authorization: Bearer sk-Cq9IzW7bjfsQqhx7tnKFT3BlbkFJSnrHFK3ArCXdojuIECp7123
 
 {
   "model": "gpt-3.5-turbo",
