@@ -21,13 +21,64 @@ Content-Type: application/json
 ###删除用户
 DELETE {{host}}/api/user/self/
 
+###管理员获取全部用户
+GET {{host}}/api/user/
+Content-Type: application/x-www-form-urlencoded
+
+###管理员创建用户
+POST {{host}}/api/user/
+Content-Type: application/x-www-form-urlencoded
+
+{"username":"test","display_name":"test","password":"123456"}
+
+###管理员修改用户
+PUT {{host}}/api/user/
+Content-Type: application/x-www-form-urlencoded
+
+###管理员管理用户/禁用 disable/删除 delete
+POST {{host}}/api/user/manage
+Content-Type: application/x-www-form-urlencoded
+
+{"username":"test","action":"disable"}
+
 ###获取登录accesstoken
 GET {{host}}/api/user/token
 Content-Type: application/x-www-form-urlencoded
 
+###获取用户的AffCode
+GET {{host}}/api/user/aff
+Content-Type: application/x-www-form-urlencoded
+
+### 兑换 兑换码
+POST {{host}}/api/user/topup
+Content-Type: application/x-www-form-urlencoded
+
+{"key":"兑换码"}
+
 ###获取所有chat访问token
 GET {{host}}/api/token
 Content-Type: application/x-www-form-urlencoded
+
+###获取系统信息
+GET {{host}}/api/status
+Content-Type: application/x-www-form-urlencoded
+
+###获取消息提醒
+GET {{host}}/api/notice
+Content-Type: application/x-www-form-urlencoded
+
+###获取系统设置
+GET {{host}}/api/option/
+Content-Type: application/x-www-form-urlencoded
+
+###获取所有渠道
+GET {{host}}/api/channel/
+Content-Type: application/x-www-form-urlencoded
+
+
+
+
+
 
 ###新建token
 POST {{host}}/api/token/
