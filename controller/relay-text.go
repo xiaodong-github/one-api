@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"one-api/common"
 	"one-api/model"
@@ -313,8 +314,18 @@ func relayTextHelper(c *gin.Context, relayMode int) *OpenAIErrorWithStatusCode {
 		isStream = isStream || strings.HasPrefix(resp.Header.Get("Content-Type"), "text/event-stream")
 	}
 	if resp.StatusCode != http.StatusOK {
-		return errorWrapper(
-			fmt.Errorf("bad status code: %d", resp.StatusCode), "bad_status_code", resp.StatusCode)
+		content, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return errorWrapper(err, "read_openai_response_failed", http.StatusInternalServerError)
+		}
+		var openAIResponseError OpenAIResponseError
+		if err := json.Unmarshal(content, &openAIResponseError); err != nil {
+			return errorWrapper(err, "unmarshal_openai_response_failed", http.StatusInternalServerError)
+		}
+		return &OpenAIErrorWithStatusCode{
+			OpenAIError: openAIResponseError.Error,
+			StatusCode:  resp.StatusCode,
+		}
 	}
 	var textResponse TextResponse
 	tokenName := c.GetString("token_name")

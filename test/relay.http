@@ -11,13 +11,13 @@ Authorization: NbNs5ThVaPMoanMr1a5fA601A0B74eF9B8C41862D4C73b21
 ###生成图片
 POST {{host}}/v1/images/generations
 Content-Type: application/json
-Authorization: NbNs5ThVaPMoanMr1a5fA601A0B74eF9B8C41862D4C73b21
+Authorization: boFCjheSF0Bv71lr257320877f4c4eCd9a3e599515930056
 
-{"prompt": "Conjure an installation by Patricia Piccinini, a room filled with life-sized hybrid creatures, blurring the line between the familiar and the bizarre. The high-resolution 3D art piece captures the poignant expressions and intricate details of these creatures.  --ar 9:14 --s 250 --style raw","n": 5,"size": "1024x1024"}
+{"prompt": "山川河流，CG，充满色彩的，高质量，高清，4K杰作，CG渲染，电影镜头，完美光影，风景，阳光，完美的天空，漂亮的天空，蓝天白云，完美的树木","n": 1,"size": "1024x1024"}
 
 ###修改图片
 POST {{host}}/v1/images/edits
 Content-Type: application/json
 Authorization: NbNs5ThVaPMoanMr1a5fA601A0B74eF9B8C41862D4C73b21
 
-{"image": "test","prompt": "Make the animation in the picture green","n": 1,"size": "1024x1024","response_format": "url"}
+{"mask": "","image": "test","prompt": "Make the animation in the picture green","n": 1,"size": "1024x1024","response_format": "url"}

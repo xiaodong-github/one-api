@@ -41,8 +41,7 @@ POST {{host}}/v1/chat/completions
 Content-Type: application/json; charset=UTF-8
 Authorization: {{Authorization-openai}}
 
-
-{"stream": true,"model": "gpt-3.5-turbo","messages": [{"role": "user", "content": "Just tell me your name. No other information."}]}
+{"stream": true,"model": "gpt-3.5-turbo","messages": [{"role": "user", "content": "who are you."}]}
 
 ###讯飞 聊天接口
 POST {{host}}/v1/chat/completions
