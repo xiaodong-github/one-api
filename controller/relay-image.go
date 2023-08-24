@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"mime/multipart"
 	"net/http"
 	"one-api/common"
@@ -328,7 +329,20 @@ func relayImageHelper(c *gin.Context, relayMode int) *OpenAIErrorWithStatusCode 
 	if err != nil {
 		return errorWrapper(err, "do_request_failed", http.StatusInternalServerError)
 	}
-
+	if resp.StatusCode != http.StatusOK {
+		content, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return errorWrapper(err, "read_openai_response_failed", http.StatusInternalServerError)
+		}
+		var openAIResponseError OpenAIResponseError
+		if err := json.Unmarshal(content, &openAIResponseError); err != nil {
+			return errorWrapper(err, "unmarshal_openai_response_failed", http.StatusInternalServerError)
+		}
+		return &OpenAIErrorWithStatusCode{
+			OpenAIError: openAIResponseError.Error,
+			StatusCode:  resp.StatusCode,
+		}
+	}
 	err = req.Body.Close()
 	if err != nil {
 		return errorWrapper(err, "close_request_body_failed", http.StatusInternalServerError)

@@ -11,9 +11,9 @@ Authorization: NbNs5ThVaPMoanMr1a5fA601A0B74eF9B8C41862D4C73b21
 ###生成图片
 POST {{host}}/v1/images/generations
 Content-Type: application/json
-Authorization: boFCjheSF0Bv71lr257320877f4c4eCd9a3e599515930056
+Authorization: {{Authorization-openai}}
 
-{"prompt": "山川河流，CG，充满色彩的，高质量，高清，4K杰作，CG渲染，电影镜头，完美光影，风景，阳光，完美的天空，漂亮的天空，蓝天白云，完美的树木","n": 1,"size": "1024x1024"}
+{"prompt": "一只小猫","n": 1,"size": "256x256"}
 
 ###修改图片
 POST {{host}}/v1/images/edits
