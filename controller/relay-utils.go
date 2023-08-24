@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/pkoukk/tiktoken-go"
 	"one-api/common"
+	"strings"
 )
 
 var stopFinishReason = "stop"
@@ -103,6 +104,9 @@ func shouldDisableChannel(err *OpenAIError) bool {
 		return false
 	}
 	if err.Type == "insufficient_quota" || err.Code == "invalid_api_key" || err.Code == "account_deactivated" {
+		return true
+	}
+	if strings.Contains(err.Message, "Billing hard limit has been reached") {
 		return true
 	}
 	return false
