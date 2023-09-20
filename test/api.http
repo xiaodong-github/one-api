@@ -92,7 +92,28 @@ POST {{host}}/v1/chat/completions
 Content-Type: application/json; charset=UTF-8
 Authorization: {{Authorization-openai}}
 
-{"stream": true,"model": "gpt-3.5-turbo","messages": [{"role": "user", "content": "who are you."}]}
+{"stream": true,"model": "gpt-3.5-turbo","messages": [{"role": "user", "content": "test"}]}
+
+###chatbase 聊天接口
+POST {{chatbaseHost}}/v1/chat
+Content-Type: application/json; charset=UTF-8
+Authorization: {{Authorization-chatbase}}
+Cache-Control: no-cache
+Connection: keep-alive
+
+{
+  "stream": false,
+  "temperature": 0,
+  "chatbotId": "oMYVtX7tr5gtNdnWiqZD3",
+  "model": "gpt-3.5-turbo",
+  "messages": [
+    {
+      "role": "user",
+      "content": "介绍手机域名"
+    }
+  ],
+  "conversationId": "00xxxxxxx1"
+}
 
 ###讯飞 聊天接口
 POST {{host}}/v1/chat/completions

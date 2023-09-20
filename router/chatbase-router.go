@@ -1,21 +1,14 @@
 package router
 
 import (
+	"github.com/gin-gonic/gin"
 	"one-api/controller"
 	"one-api/middleware"
-
-	"github.com/gin-gonic/gin"
 )
 
-func SetRelayRouter(router *gin.Engine) {
-	// https://platform.openai.com/docs/api-reference/introduction
-	modelsRouter := router.Group("/v1/models")
-	modelsRouter.Use(middleware.TokenAuth())
-	{
-		modelsRouter.GET("", controller.ListModels)
-		modelsRouter.GET("/:model", controller.RetrieveModel)
-	}
-	relayV1Router := router.Group("/v1")
+func SetChatbaseRouter(router *gin.Engine) {
+	// 聊天机器人
+	relayV1Router := router.Group("/cb")
 	relayV1Router.Use(middleware.TokenAuth(), middleware.Distribute())
 	{
 		relayV1Router.POST("/completions", controller.Relay)

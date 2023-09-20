@@ -96,6 +96,17 @@ func errorWrapper(err error, code string, statusCode int) *OpenAIErrorWithStatus
 	}
 }
 
+func errorWrapper2(err error, t string, statusCode int) *ChatbaseErrorWithStatusCode {
+	chatbaseError := ChatbaseError{
+		Message: err.Error(),
+	}
+	return &ChatbaseErrorWithStatusCode{
+		ChatbaseError: chatbaseError,
+		StatusCode:    statusCode,
+		Type:          t,
+	}
+}
+
 func shouldDisableChannel(err *OpenAIError) bool {
 	if !common.AutomaticDisableChannelEnabled {
 		return false

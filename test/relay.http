@@ -13,7 +13,7 @@ POST {{host}}/v1/images/generations
 Content-Type: application/json
 Authorization: {{Authorization-openai}}
 
-{"prompt": "一只小猫","n": 1,"size": "256x256"}
+{"prompt": "画图，一位美丽的女孩，肤白貌美大长腿。","n": 1,"size": "1024x1024"}
 
 ###修改图片
 POST {{host}}/v1/images/edits

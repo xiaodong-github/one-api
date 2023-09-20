@@ -43,6 +43,15 @@ type GeneralOpenAIRequest struct {
 	Size        string    `json:"size,omitempty"`
 }
 
+type GeneralChatbaseRequest struct {
+	Model          string    `json:"model,omitempty"`
+	Messages       []Message `json:"messages,omitempty"`
+	Stream         bool      `json:"stream,omitempty"`
+	Temperature    float64   `json:"temperature,omitempty"`
+	ChatbotId      string    `json:"chatbotId,omitempty"`
+	ConversationId string    `json:"conversationId,omitempty"`
+}
+
 type ChatRequest struct {
 	Model     string    `json:"model"`
 	Messages  []Message `json:"messages"`
@@ -78,6 +87,10 @@ type Usage struct {
 	TotalTokens      int `json:"total_tokens"`
 }
 
+type ChatbaseError struct {
+	Message string `json:"message"`
+}
+
 type OpenAIError struct {
 	Message string `json:"message"`
 	Type    string `json:"type"`
@@ -91,6 +104,12 @@ type OpenAIResponseError struct {
 type OpenAIErrorWithStatusCode struct {
 	OpenAIError
 	StatusCode int `json:"status_code"`
+}
+
+type ChatbaseErrorWithStatusCode struct {
+	ChatbaseError
+	StatusCode int    `json:"status_code"`
+	Type       string `json:"type"`
 }
 
 type TextResponse struct {
@@ -111,6 +130,9 @@ type OpenAITextResponse struct {
 	Created int64                      `json:"created"`
 	Choices []OpenAITextResponseChoice `json:"choices"`
 	Usage   `json:"usage"`
+}
+type ChatbaseTextResponse struct {
+	Text string `json:"text"`
 }
 
 type OpenAIEmbeddingResponseItem struct {
@@ -153,6 +175,15 @@ type CompletionsStreamResponse struct {
 		Text         string `json:"text"`
 		FinishReason string `json:"finish_reason"`
 	} `json:"choices"`
+}
+
+func RelayChatbase(c *gin.Context) {
+	err := relayChatbaseTextHelper(c)
+	if err != nil {
+		c.JSON(err.StatusCode, gin.H{
+			"error": err.ChatbaseError.Message,
+		})
+	}
 }
 
 func Relay(c *gin.Context) {

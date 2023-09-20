@@ -35,6 +35,80 @@ func init() {
 	}
 }
 
+func relayChatbaseTextHelper(c *gin.Context) *ChatbaseErrorWithStatusCode {
+	var textRequest GeneralChatbaseRequest
+	err := common.UnmarshalBodyReusable(c, &textRequest)
+	if err != nil {
+		return errorWrapper2(err, "bind_request_body_failed", http.StatusBadRequest)
+	}
+	if textRequest.Messages == nil || len(textRequest.Messages) == 0 {
+		return errorWrapper2(errors.New("field messages is required"), "required_field_missing", http.StatusBadRequest)
+	}
+	if textRequest.ChatbotId == "" {
+		return errorWrapper2(errors.New("chatbotid field messages is required"), "required_field_missing", http.StatusBadRequest)
+	}
+	//chatbase不支持true
+	textRequest.Stream = false
+	textRequest.Temperature = 0
+
+	baseURL := "https://www.chatbase.co/api"
+	requestURL := c.Request.URL.String()
+	fullRequestURL := fmt.Sprintf("%s%s", baseURL, requestURL)
+	var requestBody io.Reader
+	jsonStr, err := json.Marshal(textRequest)
+	if err != nil {
+		return errorWrapper2(err, "marshal_text_request_failed", http.StatusInternalServerError)
+	}
+	requestBody = bytes.NewBuffer(jsonStr)
+	requestBody = c.Request.Body
+
+	var req *http.Request
+	var resp *http.Response
+
+	req, err = http.NewRequest(c.Request.Method, fullRequestURL, requestBody)
+	if err != nil {
+		return errorWrapper2(err, "new_request_failed", http.StatusInternalServerError)
+	}
+
+	req.Header.Set("Authorization", "Bearer 2cac172a-67d8-42be-a283-1a75af6ac272")
+	req.Header.Set("Content-Type", c.Request.Header.Get("Content-Type"))
+	req.Header.Set("Accept", c.Request.Header.Get("Accept"))
+	//req.Header.Set("Connection", c.Request.Header.Get("Connection"))
+	resp, err = httpClient.Do(req)
+	if err != nil {
+		return errorWrapper2(err, "do_request_failed", http.StatusInternalServerError)
+	}
+	err = req.Body.Close()
+	if err != nil {
+		return errorWrapper2(err, "close_request_body_failed", http.StatusInternalServerError)
+	}
+	err = c.Request.Body.Close()
+	if err != nil {
+		return errorWrapper2(err, "close_request_body_failed", http.StatusInternalServerError)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		content, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return errorWrapper2(err, "read_openai_response_failed", http.StatusInternalServerError)
+		}
+		var chatbaseError ChatbaseError
+		if err := json.Unmarshal(content, &chatbaseError); err != nil {
+			return errorWrapper2(err, "unmarshal_openai_response_failed", http.StatusInternalServerError)
+		}
+		return &ChatbaseErrorWithStatusCode{
+			ChatbaseError: chatbaseError,
+			StatusCode:    resp.StatusCode,
+		}
+	}
+	var err2 *ChatbaseErrorWithStatusCode
+	err2 = chatbaseHandler(c, resp)
+	if err2 != nil {
+		return err2
+	}
+	return nil
+}
+
 func relayTextHelper(c *gin.Context, relayMode int) *OpenAIErrorWithStatusCode {
 	channelType := c.GetInt("channel")
 	tokenId := c.GetInt("token_id")
