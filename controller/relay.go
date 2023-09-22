@@ -1,7 +1,9 @@
 package controller
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"one-api/common"
 	"strconv"
@@ -177,6 +179,37 @@ type CompletionsStreamResponse struct {
 	} `json:"choices"`
 }
 
+type CustomerInfo struct {
+	Name     string `json:"name,omitempty"`
+	Phone    string `json:"phone,omitempty"`
+	Email    string `json:"email,omitempty"`
+	Question string `json:"question,omitempty"`
+}
+
+func SendEmail(c *gin.Context) {
+	var customerInfo CustomerInfo
+	data, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+	}
+	err = json.Unmarshal(data, &customerInfo)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+	}
+
+	err = common.SendEmail("华瑞24小时客服获客", "shixd@rntd.cn",
+		fmt.Sprintf("姓名: %s，电话：%s,邮箱 %s,问题:%s", customerInfo.Name, customerInfo.Phone, customerInfo.Email, customerInfo.Question))
+	if err != nil {
+		common.SysError("failed to send email" + err.Error())
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"text": "发送成功",
+	})
+}
 func RelayChatbase(c *gin.Context) {
 	err := relayChatbaseTextHelper(c)
 	if err != nil {

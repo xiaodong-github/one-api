@@ -94,26 +94,6 @@ Authorization: {{Authorization-openai}}
 
 {"stream": true,"model": "gpt-3.5-turbo","messages": [{"role": "user", "content": "test"}]}
 
-###chatbase 聊天接口
-POST {{chatbaseHost}}/api/v1/chat
-Content-Type: application/json; charset=UTF-8
-Authorization: {{Authorization-chatbase}}
-Cache-Control: no-cache
-Connection: keep-alive
-
-{
-  "stream": false,
-  "temperature": 0,
-  "chatbotId": "oMYVtX7tr5gtNdnWiqZD3",
-  "model": "gpt-3.5-turbo",
-  "messages": [
-    {
-      "role": "user",
-      "content": "介绍一下习近平"
-    }
-  ],
-  "conversationId": "00xxxxxxx1"
-}
 
 ###讯飞 聊天接口
 POST {{host}}/v1/chat/completions

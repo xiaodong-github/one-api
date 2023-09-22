@@ -1,0 +1,63 @@
+###chatbase 聊天接口
+POST {{chatbaseHost}}/api/v1/chat
+Content-Type: application/json; charset=UTF-8
+Cache-Control: no-cache
+Connection: keep-alive
+
+{
+  "stream": false,
+  "temperature": 0,
+  "chatbotId": "oMYVtX7tr5gtNdnWiqZD3",
+  "model": "gpt-3.5-turbo",
+  "messages": [
+    {
+      "role": "system",
+      "content": "你是华瑞网研的习近平24小时客服"
+    },
+    {
+      "role": "user",
+      "content": "介绍下你习近平们的产品"
+    }
+  ],
+  "conversationId":"20230922-1"
+}
+
+###获取聊天记录接口
+POST {{chatbaseHost}}/api/v1/chat
+Content-Type: application/json; charset=UTF-8
+Cache-Control: no-cache
+Connection: keep-alive
+
+{
+  "stream": true,
+  "temperature": 0,
+  "chatbotId": "oMYVtX7tr5gtNdnWiqZD3",
+  "model": "gpt-3.5-turbo",
+  "messages": [
+    {
+      "role": "system",
+      "content": "你是华瑞网研的24小时客服"
+    },
+    {
+      "role": "user",
+      "content": "介绍下你们的产品"
+    }
+  ],
+  "conversationId":"20230922-1"
+}
+
+###发送邮件
+POST {{chatbaseHost}}/email/send
+Content-Type: application/json; charset=UTF-8
+Authorization: {{Authorization-chatbase}}
+Cache-Control: no-cache
+Connection: keep-alive
+
+{
+  "name": "张三",
+  "email": "ssss@qq.com",
+  "phone": "13888888888",
+  "question": "测试"
+}
+
+

@@ -11,12 +11,13 @@ func SetApiRouter(router *gin.Engine) {
 	apiRouter := router.Group("/api")
 	//gzip 压缩中间件
 	apiRouter.Use(gzip.Gzip(gzip.DefaultCompression))
-	//在 apiRouter 路由组中应用全局 API 速率限制中间件
-	apiRouter.Use(middleware.GlobalAPIRateLimit())
+	userRoute := apiRouter.Group("/v1")
 	{
-		userRoute := apiRouter.Group("/v1")
-		{
-			userRoute.POST("/chat", controller.RelayChatbase)
-		}
+		//只有chat需要限制
+		userRoute.POST("/chat", middleware.GlobalAPIRateLimit(), controller.RelayChatbase)
+	}
+	emailRouter := router.Group("/email")
+	{
+		emailRouter.POST("/send", controller.SendEmail)
 	}
 }
