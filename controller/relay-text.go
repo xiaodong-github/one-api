@@ -37,6 +37,7 @@ func init() {
 
 func relayChatbaseTextHelper(c *gin.Context) *ChatbaseErrorWithStatusCode {
 	var textRequest GeneralChatbaseRequest
+
 	err := common.UnmarshalBodyReusable(c, &textRequest)
 	if err != nil {
 		return errorWrapper2(err, "bind_request_body_failed", http.StatusBadRequest)
@@ -47,11 +48,17 @@ func relayChatbaseTextHelper(c *gin.Context) *ChatbaseErrorWithStatusCode {
 	if textRequest.ChatbotId == "" {
 		return errorWrapper2(errors.New("chatbotid field messages is required"), "required_field_missing", http.StatusBadRequest)
 	}
+	keywordsResult, err := keywordFilter(&textRequest)
+	if err != nil {
+		return errorWrapper2(errors.New("keyworkds error"), "required_field_missing", http.StatusBadRequest)
+	}
+	if keywordsResult == true {
+		return errorWrapper2(errors.New("您的问题包含敏感词汇，请重新提问"), "required_field_missing", http.StatusBadRequest)
+	}
+	cLog, _ := json.Marshal(textRequest)
+	common.ChatbaseLog(c.ClientIP() + "   " + string(cLog))
 	//chatbase不支持true
-	textRequest.Stream = false
-	textRequest.Temperature = 0
-
-	baseURL := "https://www.chatbase.co/api"
+	baseURL := "https://www.chatbase.co/"
 	requestURL := c.Request.URL.String()
 	fullRequestURL := fmt.Sprintf("%s%s", baseURL, requestURL)
 	var requestBody io.Reader
@@ -60,7 +67,7 @@ func relayChatbaseTextHelper(c *gin.Context) *ChatbaseErrorWithStatusCode {
 		return errorWrapper2(err, "marshal_text_request_failed", http.StatusInternalServerError)
 	}
 	requestBody = bytes.NewBuffer(jsonStr)
-	requestBody = c.Request.Body
+	//requestBody = c.Request.Body
 
 	var req *http.Request
 	var resp *http.Response
@@ -102,11 +109,22 @@ func relayChatbaseTextHelper(c *gin.Context) *ChatbaseErrorWithStatusCode {
 		}
 	}
 	var err2 *ChatbaseErrorWithStatusCode
-	err2 = chatbaseHandler(c, resp)
+	if textRequest.Stream == true {
+		err2 = chatbaseStreamHandlerHandler(c, resp)
+	} else {
+		err2 = chatbaseHandler(c, resp)
+	}
+
 	if err2 != nil {
 		return err2
 	}
 	return nil
+}
+
+func keywordFilter(content *GeneralChatbaseRequest) (bool, error) {
+	lastMessage := content.Messages[len(content.Messages)-1]
+	lastMessageContent := lastMessage.Content
+	return model.SearchKey(lastMessageContent)
 }
 
 func relayTextHelper(c *gin.Context, relayMode int) *OpenAIErrorWithStatusCode {

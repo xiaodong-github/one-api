@@ -83,21 +83,21 @@ func rateLimitFactory(maxRequestNum int, duration int64, mark string) func(c *gi
 }
 
 func GlobalWebRateLimit() func(c *gin.Context) {
-	return rateLimitFactory(common.GlobalWebRateLimitNum, common.GlobalWebRateLimitDuration, "GW")
+	return rateLimitFactory(common.GlobalWebRateLimitNum, common.GlobalWebRateLimitDuration, "GW2")
 }
 
 func GlobalAPIRateLimit() func(c *gin.Context) {
-	return rateLimitFactory(common.GlobalApiRateLimitNum, common.GlobalApiRateLimitDuration, "GA")
+	return rateLimitFactory(common.GlobalApiRateLimitNum, common.GlobalApiRateLimitDuration, "GA2")
 }
 
 func CriticalRateLimit() func(c *gin.Context) {
-	return rateLimitFactory(common.CriticalRateLimitNum, common.CriticalRateLimitDuration, "CT")
+	return rateLimitFactory(common.CriticalRateLimitNum, common.CriticalRateLimitDuration, "CT2")
 }
 
 func DownloadRateLimit() func(c *gin.Context) {
-	return rateLimitFactory(common.DownloadRateLimitNum, common.DownloadRateLimitDuration, "DW")
+	return rateLimitFactory(common.DownloadRateLimitNum, common.DownloadRateLimitDuration, "DW2")
 }
 
 func UploadRateLimit() func(c *gin.Context) {
-	return rateLimitFactory(common.UploadRateLimitNum, common.UploadRateLimitDuration, "UP")
+	return rateLimitFactory(common.UploadRateLimitNum, common.UploadRateLimitDuration, "UP2")
 }

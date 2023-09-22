@@ -1,12 +1,10 @@
 package main
 
 import (
-	"embed"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"one-api/common"
-	"one-api/controller"
 	"one-api/middleware"
 	"one-api/model"
 	"one-api/router"
@@ -14,11 +12,11 @@ import (
 	"strconv"
 )
 
-//go:embed web/build
-var buildFS embed.FS
-
-//go:embed web/build/index.html
-var indexPage []byte
+////go:embed web/build
+//var buildFS embed.FS
+//
+////go:embed web/build/index.html
+//var indexPage []byte
 
 func main() {
 	common.SetupGinLog()
@@ -50,33 +48,33 @@ func main() {
 	// Initialize options
 	model.InitOptionMap()
 	if common.RedisEnabled {
-		model.InitChannelCache()
+		//model.InitChannelCache()
 	}
-	if os.Getenv("SYNC_FREQUENCY") != "" {
-		frequency, err := strconv.Atoi(os.Getenv("SYNC_FREQUENCY"))
-		if err != nil {
-			common.FatalLog("failed to parse SYNC_FREQUENCY: " + err.Error())
-		}
-		common.SyncFrequency = frequency
-		go model.SyncOptions(frequency)
-		if common.RedisEnabled {
-			go model.SyncChannelCache(frequency)
-		}
-	}
-	if os.Getenv("CHANNEL_UPDATE_FREQUENCY") != "" {
-		frequency, err := strconv.Atoi(os.Getenv("CHANNEL_UPDATE_FREQUENCY"))
-		if err != nil {
-			common.FatalLog("failed to parse CHANNEL_UPDATE_FREQUENCY: " + err.Error())
-		}
-		go controller.AutomaticallyUpdateChannels(frequency)
-	}
-	if os.Getenv("CHANNEL_TEST_FREQUENCY") != "" {
-		frequency, err := strconv.Atoi(os.Getenv("CHANNEL_TEST_FREQUENCY"))
-		if err != nil {
-			common.FatalLog("failed to parse CHANNEL_TEST_FREQUENCY: " + err.Error())
-		}
-		go controller.AutomaticallyTestChannels(frequency)
-	}
+	//if os.Getenv("SYNC_FREQUENCY") != "" {
+	//	frequency, err := strconv.Atoi(os.Getenv("SYNC_FREQUENCY"))
+	//	if err != nil {
+	//		common.FatalLog("failed to parse SYNC_FREQUENCY: " + err.Error())
+	//	}
+	//	common.SyncFrequency = frequency
+	//	go model.SyncOptions(frequency)
+	//	if common.RedisEnabled {
+	//		go model.SyncChannelCache(frequency)
+	//	}
+	//}
+	//if os.Getenv("CHANNEL_UPDATE_FREQUENCY") != "" {
+	//	frequency, err := strconv.Atoi(os.Getenv("CHANNEL_UPDATE_FREQUENCY"))
+	//	if err != nil {
+	//		common.FatalLog("failed to parse CHANNEL_UPDATE_FREQUENCY: " + err.Error())
+	//	}
+	//	go controller.AutomaticallyUpdateChannels(frequency)
+	//}
+	//if os.Getenv("CHANNEL_TEST_FREQUENCY") != "" {
+	//	frequency, err := strconv.Atoi(os.Getenv("CHANNEL_TEST_FREQUENCY"))
+	//	if err != nil {
+	//		common.FatalLog("failed to parse CHANNEL_TEST_FREQUENCY: " + err.Error())
+	//	}
+	//	go controller.AutomaticallyTestChannels(frequency)
+	//}
 
 	// Initialize HTTP server
 	server := gin.Default()
@@ -88,7 +86,8 @@ func main() {
 	store := cookie.NewStore([]byte(common.SessionSecret))
 	server.Use(sessions.Sessions("session", store))
 
-	router.SetRouter(server, buildFS, indexPage)
+	//router.SetRouter(server, buildFS, indexPage)
+	router.SetRouter(server)
 	var port = os.Getenv("PORT")
 	if port == "" {
 		port = strconv.Itoa(*common.Port)

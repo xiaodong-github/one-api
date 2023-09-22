@@ -111,8 +111,8 @@ var (
 // All duration's unit is seconds
 // Shouldn't larger then RateLimitKeyExpirationDuration
 var (
-	GlobalApiRateLimitNum            = 180
-	GlobalApiRateLimitDuration int64 = 3 * 60
+	GlobalApiRateLimitNum            = 100
+	GlobalApiRateLimitDuration int64 = 24 * 60 * 60
 
 	GlobalWebRateLimitNum            = 60
 	GlobalWebRateLimitDuration int64 = 3 * 60
@@ -123,8 +123,8 @@ var (
 	DownloadRateLimitNum            = 10
 	DownloadRateLimitDuration int64 = 60
 
-	CriticalRateLimitNum            = 20
-	CriticalRateLimitDuration int64 = 20 * 60
+	CriticalRateLimitNum            = 10
+	CriticalRateLimitDuration int64 = 60
 )
 
 var RateLimitKeyExpirationDuration = 20 * time.Minute

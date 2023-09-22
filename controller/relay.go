@@ -181,7 +181,7 @@ func RelayChatbase(c *gin.Context) {
 	err := relayChatbaseTextHelper(c)
 	if err != nil {
 		c.JSON(err.StatusCode, gin.H{
-			"error": err.ChatbaseError.Message,
+			"message": err.ChatbaseError.Message,
 		})
 	}
 }

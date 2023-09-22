@@ -9,3 +9,24 @@ Authorization: Bearer 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
   "temperature": 0.7,
   "stream": false
 }
+
+###
+POST https://www.chatbase.co/api/v1/chat
+Content-Type: application/json; charset=UTF-8
+Authorization: Bearer 2cac172a-67d8-42be-a283-1a75af6ac2721
+Cache-Control: no-cache
+Connection: keep-alive
+
+{
+  "stream": false,
+  "temperature": 0,
+  "chatbotId": "oMYVtX7tr5gtNdnWiqZD3",
+  "model": "gpt-3.5-turbo",
+  "messages": [
+    {
+      "role": "user",
+      "content": "介绍一下华瑞"
+    }
+  ],
+  "conversationId": "00xxxxxxx1"
+}
