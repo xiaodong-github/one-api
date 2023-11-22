@@ -16,10 +16,9 @@ Connection: keep-alive
     },
     {
       "role": "user",
-      "content": "介绍下你习近平们的产品"
+      "content": "介绍下习近平你们的产品"
     }
-  ],
-  "conversationId":"20230922-1"
+  ]
 }
 
 ###获取聊天记录接口

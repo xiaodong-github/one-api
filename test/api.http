@@ -88,11 +88,20 @@ Authorization: 66459398d897400cb7539937f4ecd2ff
 {"name": "test4","expired_time": -1,"unlimited_quota": true}
 
 ###openai 聊天接口
-POST {{host}}/v1/chat/completions
+POST {{host-domain}}/v1/chat/completions
 Content-Type: application/json; charset=UTF-8
-Authorization: {{Authorization-openai}}
+Authorization: {{Authorization-openai-shixd}}
+Accept: text/event-stream;charset=utf-8
 
-{"stream": true,"model": "gpt-3.5-turbo","messages": [{"role": "user", "content": "test"}]}
+{"stream": true,"model": "gpt-3.5-turbo-1106","messages": [{"role": "user", "content": "介绍下周杰伦."}]}
+
+###openai 聊天接口
+POST {{openai}}/v1/chat/completions
+Content-Type: application/json; charset=UTF-8
+Authorization: Bearer {{openai-key}}
+Accept: text/event-stream;charset=utf-8
+
+{"stream": true,"model": "gpt-3.5-turbo-1106","messages": [{"role": "user", "content": "介绍下周杰伦好吗？"}]}
 
 
 ###讯飞 聊天接口

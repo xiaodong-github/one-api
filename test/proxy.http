@@ -1,13 +1,14 @@
 ###
-POST https://api.openai-proxy.com/v1/chat/completions
+POST {{host}}/v1/chat/completions
 Content-Type: application/json; charset=UTF-8
-Authorization: Bearer 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
+Authorization: Bearer rW7cAQYObWyDv1OvE450B952Ac9448A198B46aCbFcA214B2
+Accept-Encoding: UTF-8
 
 {
   "model": "gpt-3.5-turbo",
-  "messages": [{"role": "system","content": "You are ChatGPT, a large language model trained by OpenAI .Knowledge cutoff: 2021-09 ."},{"role": "user", "content": "今天的日期？"}],
+  "messages": [{"role": "system","content": "You are ChatGPT, a large language model trained by OpenAI .Knowledge cutoff: 2021-09 ."},{"role": "user", "content": "介绍你自己"}],
   "temperature": 0.7,
-  "stream": false
+  "stream": true
 }
 
 ###
