@@ -1,10 +1,10 @@
 ###
 POST https://api.openai-proxy.com/v1/chat/completions
 Content-Type: application/json; charset=UTF-8
-Authorization: Bearer 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
+Authorization: Bearer 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
 
 {
-  "model": "gpt-3.5-turbo",
+  "model": "gpt-3.5-turbo-1106",
   "messages": [{"role": "user", "content": "who are you?"}],
   "temperature": 0.7,
   "stream": true
